@@ -4,10 +4,10 @@
     <title>katie&#39;s journal</title>
     <description>Thoughts about college life, computer science, artificial intelligence and philosophy
 </description>
-    <link>http://yourdomain.com/</link>
-    <atom:link href="http://yourdomain.com/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 30 Dec 2015 10:57:45 -0800</pubDate>
-    <lastBuildDate>Wed, 30 Dec 2015 10:57:45 -0800</lastBuildDate>
+    <link>/</link>
+    <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Wed, 30 Dec 2015 11:30:56 -0800</pubDate>
+    <lastBuildDate>Wed, 30 Dec 2015 11:30:56 -0800</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
@@ -19,8 +19,8 @@
 &lt;p&gt;Some sacrifices had to be made!  Agh.  Originally, “katiebui.com” was supposed to direct the user to the portfolio.  But I was using GitHub pages to host my website, and Jekyll forces me to host its file in my root directory.&lt;/p&gt;
 </description>
         <pubDate>Wed, 30 Dec 2015 02:23:00 -0800</pubDate>
-        <link>http://yourdomain.com/2015/12/30/finally-finished.html</link>
-        <guid isPermaLink="true">http://yourdomain.com/2015/12/30/finally-finished.html</guid>
+        <link>/2015/12/30/finally-finished.html</link>
+        <guid isPermaLink="true">/2015/12/30/finally-finished.html</guid>
         
         <category>webstuff</category>
         
