@@ -1,0 +1,68 @@
+---
+# Only the main Sass file needs front matter (the dashes are enough)
+---
+@charset "utf-8";
+
+
+// Our variables
+$base-font-family: "Vollkorn";
+$base-font-size:   16px;
+$base-font-weight: 400;
+$small-font-size:  $base-font-size * 0.875;
+$base-line-height: 1.5;
+
+h1
+{
+	font-family: 'Playfair Display', 'Vollkorn', serif;
+	font-size: 60px;
+	color: #1e1c19;
+	background: url('layout_images/brushh1.png') no-repeat;
+}
+
+$spacing-unit:     30px;
+
+$text-color:       #111;
+$background-color: #f3f1ea;
+$brand-color:      #2a7ae2;
+
+$grey-color:       #828282;
+$grey-color-light: lighten($grey-color, 40%);
+$grey-color-dark:  darken($grey-color, 25%);
+
+// Width of the content area
+$content-width:    800px;
+
+$on-palm:          600px;
+$on-laptop:        800px;
+
+// MY CUSTOM SHIT!
+
+$accent1:			#7a7878;	// dark gray
+$accent2:			#fc6d52;	// coral
+$accent3:			#333333;	// light gray
+
+$blockquote1:		#f0e1dd;	// very light coral
+$blockquote2:		#f7ece9;	// muted coral
+
+
+// Use media queries like this:
+// @include media-query($on-palm) {
+//     .wrapper {
+//         padding-right: $spacing-unit / 2;
+//         padding-left: $spacing-unit / 2;
+//     }
+// }
+@mixin media-query($device) {
+    @media screen and (max-width: $device) {
+        @content;
+    }
+}
+
+
+
+// Import partials from `sass_dir` (defaults to `_sass`)
+@import
+        "base",
+        "layout",
+        "syntax-highlighting"
+;
