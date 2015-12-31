@@ -6,17 +6,119 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 30 Dec 2015 11:57:19 -0800</pubDate>
-    <lastBuildDate>Wed, 30 Dec 2015 11:57:19 -0800</lastBuildDate>
+    <pubDate>Thu, 31 Dec 2015 01:25:35 -0800</pubDate>
+    <lastBuildDate>Thu, 31 Dec 2015 01:25:35 -0800</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
-        <title>Finally Finished!!</title>
+        <title>Hurray, finished!! + Fixing Jekyll Problems</title>
         <description>&lt;p&gt;Holy crap, I finally have my own little home on the Internet!  I’ve built lots of websites in the past, but none with so much effort as this one.  My bed mattress probably has a dent in it from me having laid on it for like, two days straight.&lt;/p&gt;
 
-&lt;p&gt;So many languages to assemble together this with Jekyll.  Along with HTML/CSS (which was expected), there was some impromptu YAML, Liquid, and Markdown language learning.&lt;/p&gt;
+&lt;p&gt;So many languages to assemble together this with Jekyll.  Along with HTML/CSS and JavaScript (which was expected), there was some impromptu YAML, Liquid, and Markdown language learning.&lt;/p&gt;
 
-&lt;p&gt;Poor documentation made building Jekyll on GitHub Pages &lt;i&gt;way&lt;/i&gt; harder than it needed to be!!  Argh.  For the soul out there that landed here through Google, here are some fixes I had to&lt;/p&gt;
+&lt;p&gt;Building Jekyll took about 50% the time and 80% the frustration.  Poor documentation made building Jekyll on GitHub Pages &lt;i&gt;way&lt;/i&gt; harder than it needed to be!!  Argh.  For the soul out there that landed here through Google, here are some fixes I had to do:&lt;/p&gt;
+
+&lt;h3&gt;Jekyll must run on the root directory&lt;/h3&gt;
+&lt;p&gt;Looks can deceive… this blog ran a-okay on a subdirectory under my local GitHub repository, but failed to build when pushed to GitHub.  I had my website configured like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;portfolio
+|___ index.html 		(of portfolio)
+|___ ... 				(other files pertaining to portfolio)
+|___ ...
+|___ ...
+|___ jekyll blog
+        |___ index.html (of blog)
+        |___ ...
+        |___ ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Turns out that in the _configure.yml file, GitHub Pages overrides whatever source directory you set it up as.  Then when it attempts to build your site, it will begin looking for subdirections in the &lt;em&gt;root&lt;/em&gt; directory rather than from where your jekyll subdirectory is.  In my case, it was trying to find _includes.  I got this email from GitHub:&lt;/p&gt;
+
+&lt;blockquote&gt;
+The page build failed with the following error:
+
+A file was included in `kb-blog/index.html` that is a symlink or does not exist in your `_includes` directory. For more information, see https://help.github.com/articles/page-build-failed-file-is-a-symlink.
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;b&gt;What I had to do&lt;/b&gt; was make the jekyll blog’s subdirectory’s files at the same level as the portfolio’s.  So it would be organized this way instead:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll blog
+|___ journal.html       (of blog)
+|___ ...                (other files pertaining to blog)
+|___ ...
+|___ ...
+|___ index.html         (of portfolio)
+|___ ...                (other files pertaining to portfolio)
+|___ ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;It is messy and disorganized, I know!  See the next point.&lt;/p&gt;
+
+&lt;h3&gt;DNS servers only point to baseurls&lt;/h3&gt;
+
+&lt;p&gt;I had once tried to make the structure of the website look more like&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;jekyll blog
+|___ index.html         (of blog)
+|___ ...
+|___ ...
+|___ portfolio
+    |___ index.html (of portfolio)
+    |___ ...
+    |___ ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;And I wanted katiebui.com to point to the index of my portfolio, not my blog.  (In other words, katiebui.com -&amp;gt; ti-lun.github.io/portfolio/index.html.)  As much as I like to write and stuff, it’s not like I’m featuring top-notch content here yet :’D&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;What I had to do&lt;/b&gt; was organize the website like the way I had it in the first diagram.&lt;/p&gt;
+
+&lt;h3&gt;Jekyll has no tagging system.. or, at least, a readily apparent one&lt;/h3&gt;
+
+&lt;p&gt;Easy, right?  I just followed &lt;a href=&quot;http://vrepin.org/vr/Tagging/&quot; target=&quot;&quot;&gt;this tutorial&lt;/a&gt;.  It was just adding a Ruby plugin to generate a page for each tag, and then creating a page that aggregated all the blog’s tags using Liquid.  Yet there was a wrinkle here…&lt;/p&gt;
+
+&lt;h3&gt;GitHub Pages doesn&#39;t support Ruby plugins&lt;/h3&gt;
+
+&lt;p&gt;Unfortunately, figuring out that &lt;i&gt;that&lt;/i&gt; was the issue involved an hour or two of confusion and testing of will.  The problem manifested into this really odd paranoia of, “Why aren’t the tag pages being generated?!”  After all, the locally-generated Jekyll blog was working perfectly.&lt;/p&gt;
+
+&lt;p&gt;Here were some symptoms:&lt;/p&gt;
+
+&lt;ul&gt;
+	&lt;li&gt;My GitHub showed that the Jekyll blog&#39;s _site subdirectory was uploaded, along with the tag subdirectory (its child).&lt;/li&gt;
+	&lt;li&gt;None of the tag folder&#39;s subdirectories were accessible in the address bar.  (The tag folder holds all of the tags and their individual tag pages.)  So, if I try to type in katiebui.com/tag/college, I would get a 404 error.&lt;/li&gt;
+	&lt;li&gt;The tag page generator&#39;s script &lt;i&gt;must&lt;/i&gt; have been working fine, since it was able to generate pages in the local build.&lt;/li&gt;
+	&lt;li&gt;It couldn&#39;t be a DNS problem because the 404 error was from GitHub, which means the DNS server pointed to the right guy.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;After I finally realized the issue (Ruby plugins aren’t supported), I had the urge to abandon all the fixes I had made and to just get a more flexible webhost than GitHub Pages.  But I fought on when I realized I’d be taking out ~$40/year.&lt;/p&gt;
+
+&lt;p&gt;&lt;b&gt;What I had to do&lt;/b&gt; was create a directory &lt;i&gt;outside&lt;/i&gt; my GitHub repository’s local directory, and create a script that copied generated files built in the former directory into the latter directory.  (Thanks to &lt;a href=&quot;http://www.sitepoint.com/jekyll-plugins-github/&quot;&gt;this tutorial&lt;/a&gt;!)&lt;/p&gt;
+
+&lt;p&gt;So I arranged my website to be like&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;website
+    |___ everything-master
+	    |___ index.html
+	    |___ journal.html
+	    |___ ...
+    |___ ti-lun.github.io
+	    |___ anything that everything-master generates
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;Then I placed a Rakefile in everything-master that basically builds everything needed, then empties my local GitHub repository, and then copies stuff from everything-master into it.  Git add, commit and push and huzzah I’m done!… right?&lt;/p&gt;
+
+&lt;p&gt;Sorta.&lt;/p&gt;
+
+&lt;h3&gt;Still some problems, but not Jekyll-related&lt;/h3&gt;
+
+&lt;p&gt;Something that I’ve noticed is that my domain, katiebui.com, is down at seemingly-random times.  I’d have to manually go to GoDaddy.com and reconnect my domain to my GitHub Pages website, which is annoying especially in the early development phase.&lt;/p&gt;
+
+&lt;p&gt;I suspect that it has to do with DNS stuff.  I don’t know exactly how it works, though… (sigh)  Time to either call GoDaddy, or do some experimentation.&lt;/p&gt;
+
+&lt;p&gt;In any case, I think I’ve gained confidence in using my resources (i.e. other people’s stuff) and finding ways to use them (i.e. other people’s advice and experience).  Most of all… I think I learned that reading documentation and restraining my momentary impatience would have saved me quite a bit of trouble, hahaha.&lt;/p&gt;
 
 </description>
         <pubDate>Wed, 30 Dec 2015 02:23:00 -0800</pubDate>
@@ -28,6 +130,10 @@
         <category>projects</category>
         
         <category>announcements</category>
+        
+        <category>Jekyll</category>
+        
+        <category>setup</category>
         
         
       </item>

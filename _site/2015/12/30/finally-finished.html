@@ -59,9 +59,22 @@
   <div class="post-content" itemprop="articleBody">
     <p>Holy crap, I finally have my own little home on the Internet!  I’ve built lots of websites in the past, but none with so much effort as this one.  My bed mattress probably has a dent in it from me having laid on it for like, two days straight.</p>
 
-<p>So many languages to assemble together this with Jekyll.  Along with HTML/CSS (which was expected), there was some impromptu YAML, Liquid, and Markdown language learning.</p>
+<p>So many languages to assemble together this with Jekyll.  Along with HTML/CSS and JavaScript (which was expected), there was some impromptu YAML, Liquid, and Markdown language learning.</p>
 
-<p>Poor documentation made building Jekyll on GitHub Pages <i>way</i> harder than it needed to be!!  Argh.  For the soul out there that landed here through Google, here are some fixes I had to</p>
+<p>Building Jekyll took about 50% the time and 80% the frustration.  Poor documentation made building Jekyll on GitHub Pages <i>way</i> harder than it needed to be!!  Argh.  For the soul out there that landed here through Google, here are some fixes I had to do:</p>
+
+<h3>Jekyll must run on the root directory</h3>
+<p>Looks can deceive… this blog ran a-okay on a subdirectory under my local GitHub repository, but failed to build when pushed to GitHub.  I had my website configured like this:</p>
+
+<blockquote>website
+	|___ index.html 		(of portfolio)
+	|___ ... (				other files pertaining to portfolio)
+	|___ ...
+	|___ ...
+	|___ jekyll blog
+			|___ index.html (of blog)
+			|___ ...
+			|___ ...</blockquote>
 
 
   </div>

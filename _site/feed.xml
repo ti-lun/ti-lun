@@ -6,17 +6,30 @@
 </description>
     <link>/</link>
     <atom:link href="/feed.xml" rel="self" type="application/rss+xml"/>
-    <pubDate>Wed, 30 Dec 2015 11:57:19 -0800</pubDate>
-    <lastBuildDate>Wed, 30 Dec 2015 11:57:19 -0800</lastBuildDate>
+    <pubDate>Wed, 30 Dec 2015 21:20:25 -0800</pubDate>
+    <lastBuildDate>Wed, 30 Dec 2015 21:20:25 -0800</lastBuildDate>
     <generator>Jekyll v3.0.1</generator>
     
       <item>
         <title>Finally Finished!!</title>
         <description>&lt;p&gt;Holy crap, I finally have my own little home on the Internet!  I’ve built lots of websites in the past, but none with so much effort as this one.  My bed mattress probably has a dent in it from me having laid on it for like, two days straight.&lt;/p&gt;
 
-&lt;p&gt;So many languages to assemble together this with Jekyll.  Along with HTML/CSS (which was expected), there was some impromptu YAML, Liquid, and Markdown language learning.&lt;/p&gt;
+&lt;p&gt;So many languages to assemble together this with Jekyll.  Along with HTML/CSS and JavaScript (which was expected), there was some impromptu YAML, Liquid, and Markdown language learning.&lt;/p&gt;
 
-&lt;p&gt;Poor documentation made building Jekyll on GitHub Pages &lt;i&gt;way&lt;/i&gt; harder than it needed to be!!  Argh.  For the soul out there that landed here through Google, here are some fixes I had to&lt;/p&gt;
+&lt;p&gt;Building Jekyll took about 50% the time and 80% the frustration.  Poor documentation made building Jekyll on GitHub Pages &lt;i&gt;way&lt;/i&gt; harder than it needed to be!!  Argh.  For the soul out there that landed here through Google, here are some fixes I had to do:&lt;/p&gt;
+
+&lt;h3&gt;Jekyll must run on the root directory&lt;/h3&gt;
+&lt;p&gt;Looks can deceive… this blog ran a-okay on a subdirectory under my local GitHub repository, but failed to build when pushed to GitHub.  I had my website configured like this:&lt;/p&gt;
+
+&lt;blockquote&gt;website
+	|___ index.html 		(of portfolio)
+	|___ ... (				other files pertaining to portfolio)
+	|___ ...
+	|___ ...
+	|___ jekyll blog
+			|___ index.html (of blog)
+			|___ ...
+			|___ ...&lt;/blockquote&gt;
 
 </description>
         <pubDate>Wed, 30 Dec 2015 02:23:00 -0800</pubDate>
