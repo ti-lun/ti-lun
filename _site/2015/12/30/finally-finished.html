@@ -6,12 +6,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Finally Finished!!</title>
+  <title>Hurray, finished!! + Fixing Jekyll Problems</title>
   <meta name="description" content="Holy crap, I finally have my own little home on the Internet!  I’ve built lots of websites in the past, but none with so much effort as this one.  My bed mat...">
 
   <link rel="stylesheet" href="/css/main.css">
-  <link rel="canonical" href="/2015/12/30/finally-finished.html">
-  <link rel="alternate" type="application/rss+xml" title="katie's journal" href="/feed.xml">
+  <link rel="canonical" href="katiebui.com/2015/12/30/finally-finished.html">
+  <link rel="alternate" type="application/rss+xml" title="katie's journal" href="katiebui.com/feed.xml">
 </head>
 
 
@@ -35,9 +35,10 @@
       </a>
 
       <div class="trigger">
-		  <a class="page-link" href="/portfolio/index.html">portfolio</a>
-		  <a class="page-link" href="http://katiebui.com/tag_page.html">tags</a>
-		  <a class="page-link" href="?">favorites</a>
+		  <a class="page-link" href="http://katiebui.com/journal">home</a>
+		  <a class="page-link" href="http://katiebui.com/">portfolio</a>
+			  <a class="page-link" href="http://katiebui.com/tags">tags</a>
+		  <a class="page-link" href="http://katiebui.com/favorites">favorites</a>
       </div>
     </nav>
 
@@ -52,7 +53,7 @@
 <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title" itemprop="name headline">Finally Finished!!</h1>
+    <h1 class="post-title" itemprop="name headline">Hurray, finished!! + Fixing Jekyll Problems</h1>
     <p class="post-meta"><time datetime="2015-12-30T02:23:00-08:00" itemprop="datePublished">Dec 30, 2015</time></p>
   </header>
 
@@ -66,16 +67,106 @@
 <h3>Jekyll must run on the root directory</h3>
 <p>Looks can deceive… this blog ran a-okay on a subdirectory under my local GitHub repository, but failed to build when pushed to GitHub.  I had my website configured like this:</p>
 
-<blockquote>website
-	|___ index.html 		(of portfolio)
-	|___ ... (				other files pertaining to portfolio)
-	|___ ...
-	|___ ...
-	|___ jekyll blog
-			|___ index.html (of blog)
-			|___ ...
-			|___ ...</blockquote>
+<div class="highlighter-rouge"><pre class="highlight"><code>portfolio
+|___ index.html 		(of portfolio)
+|___ ... 				(other files pertaining to portfolio)
+|___ ...
+|___ ...
+|___ jekyll blog
+        |___ index.html (of blog)
+        |___ ...
+        |___ ...
+</code></pre>
+</div>
 
+<p>Turns out that in the _configure.yml file, GitHub Pages overrides whatever source directory you set it up as.  Then when it attempts to build your site, it will begin looking for subdirections in the <em>root</em> directory rather than from where your jekyll subdirectory is.  In my case, it was trying to find _includes.  I got this email from GitHub:</p>
+
+<blockquote>
+The page build failed with the following error:
+
+A file was included in `kb-blog/index.html` that is a symlink or does not exist in your `_includes` directory. For more information, see https://help.github.com/articles/page-build-failed-file-is-a-symlink.
+</blockquote>
+
+<p><b>What I had to do</b> was make the jekyll blog’s subdirectory’s files at the same level as the portfolio’s.  So it would be organized this way instead:</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>jekyll blog
+|___ journal.html       (of blog)
+|___ ...                (other files pertaining to blog)
+|___ ...
+|___ ...
+|___ index.html         (of portfolio)
+|___ ...                (other files pertaining to portfolio)
+|___ ...
+</code></pre>
+</div>
+
+<p>It is messy and disorganized, I know!  See the next point.</p>
+
+<h3>DNS servers only point to baseurls</h3>
+
+<p>I had once tried to make the structure of the website look more like</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>jekyll blog
+|___ index.html         (of blog)
+|___ ...
+|___ ...
+|___ portfolio
+    |___ index.html (of portfolio)
+    |___ ...
+    |___ ...
+</code></pre>
+</div>
+
+<p>And I wanted katiebui.com to point to the index of my portfolio, not my blog.  (In other words, katiebui.com -&gt; ti-lun.github.io/portfolio/index.html.)  As much as I like to write and stuff, it’s not like I’m featuring top-notch content here yet :’D</p>
+
+<p><b>What I had to do</b> was organize the website like the way I had it in the first diagram.</p>
+
+<h3>Jekyll has no tagging system.. or, at least, a readily apparent one</h3>
+
+<p>Easy, right?  I just followed <a href="http://vrepin.org/vr/Tagging/" target="">this tutorial</a>.  It was just adding a Ruby plugin to generate a page for each tag, and then creating a page that aggregated all the blog’s tags using Liquid.  Yet there was a wrinkle here…</p>
+
+<h3>GitHub Pages doesn't support Ruby plugins</h3>
+
+<p>Unfortunately, figuring out that <i>that</i> was the issue involved an hour or two of confusion and testing of will.  The problem manifested into this really odd paranoia of, “Why aren’t the tag pages being generated?!”  After all, the locally-generated Jekyll blog was working perfectly.</p>
+
+<p>Here were some symptoms:</p>
+
+<ul>
+	<li>My GitHub showed that the Jekyll blog's _site subdirectory was uploaded, along with the tag subdirectory (its child).</li>
+	<li>None of the tag folder's subdirectories were accessible in the address bar.  (The tag folder holds all of the tags and their individual tag pages.)  So, if I try to type in katiebui.com/tag/college, I would get a 404 error.</li>
+	<li>The tag page generator's script <i>must</i> have been working fine, since it was able to generate pages in the local build.</li>
+	<li>It couldn't be a DNS problem because the 404 error was from GitHub, which means the DNS server pointed to the right guy.</li>
+</ul>
+
+<p>After I finally realized the issue (Ruby plugins aren’t supported), I had the urge to abandon all the fixes I had made and to just get a more flexible webhost than GitHub Pages.  But I fought on when I realized I’d be taking out ~$40/year.</p>
+
+<p><b>What I had to do</b> was create a directory <i>outside</i> my GitHub repository’s local directory, and create a script that copied generated files built in the former directory into the latter directory.  (Thanks to <a href="http://www.sitepoint.com/jekyll-plugins-github/">this tutorial</a>!)</p>
+
+<p>So I arranged my website to be like</p>
+
+<div class="highlighter-rouge"><pre class="highlight"><code>website
+    |___ everything-master
+	    |___ index.html
+	    |___ journal.html
+	    |___ ...
+    |___ ti-lun.github.io
+	    |___ anything that everything-master generates
+</code></pre>
+</div>
+
+<p>Then I placed a Rakefile in everything-master that basically builds everything needed, then empties my local GitHub repository, and then copies stuff from everything-master into it.  Git add, commit and push and huzzah I’m done!… right?</p>
+
+<p>Sorta.</p>
+
+<h3>Still some problems, but not Jekyll-related</h3>
+
+<p>Something that I’ve noticed is that my domain, katiebui.com, is down at seemingly-random times.  I’d have to manually go to GoDaddy.com and reconnect my domain to my GitHub Pages website, which is annoying especially in the early development phase.</p>
+
+<p>I suspect that it has to do with DNS stuff.  I don’t know exactly how it works, though… (sigh)  Time to either call GoDaddy, or do some experimentation.</p>
+
+<p>In any case, I think I’ve gained confidence in using my resources (i.e. other people’s stuff) and finding ways to use them (i.e. other people’s advice and experience).  Most of all… I think I learned that reading documentation and restraining my momentary impatience would have saved me quite a bit of trouble, hahaha.</p>
+
+<p><b>Update!</b>  I called GoDaddy; they said I didn’t delete the A record of their default parked page, LOL.  Works great now.</p>
 
   </div>
   
@@ -86,9 +177,13 @@
 
 
 
+<a href="/tag/Jekyll">#Jekyll</a>
+
 <a href="/tag/announcements">#announcements</a>
 
 <a href="/tag/projects">#projects</a>
+
+<a href="/tag/setup">#setup</a>
 
 <a href="/tag/webstuff">#webstuff</a>
 
